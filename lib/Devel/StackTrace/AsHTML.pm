@@ -2,9 +2,9 @@ package Devel::StackTrace::AsHTML;
 
 use strict;
 use 5.008_001;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
-use Data::Dump;
+use Data::Dumper;
 use Devel::StackTrace;
 use Scalar::Util;
 
@@ -91,16 +91,22 @@ sub _build_lexicals {
 
     return '' unless keys %$lexicals;
 
-    my $html;
-    $html = qq(<p><a class="toggle" href="javascript:showLexicals('lexicals-$ref')">Show lexical variables</a></p><pre class="lexicals" id="lexicals-$ref">);
+    my $html = qq(<p><a class="toggle" href="javascript:showLexicals('lexicals-$ref')">Show lexical variables</a></p><pre class="lexicals" id="lexicals-$ref">);
 
-    # Don't use while each since Dump confuses that
+    my $dumper = sub {
+        my $d = Data::Dumper->new([ @_ ]);
+        $d->Indent(1)->Terse(1)->Deparse(1);
+        chomp(my $dump = $d->Dump);
+        $dump;
+    };
+
+    # Don't use while each since Dumper confuses that
     for my $var (sort keys %$lexicals) {
         my $value = $lexicals->{$var};
         $value = $$value if ref $value eq 'SCALAR' or ref $value eq 'REF';
-        my $dump = Data::Dump::dump($value);
-        $dump =~ s/^\{(.*)\}$/($1)/ if $var =~ /^\%/;
-        $dump =~ s/^\[(.*)\]$/($1)/ if $var =~ /^\@/;
+        my $dump = $dumper->($value);
+        $dump =~ s/^\{(.*)\}$/($1)/s if $var =~ /^\%/;
+        $dump =~ s/^\[(.*)\]$/($1)/s if $var =~ /^\@/;
         $html .= "my " . encode_html($var)  . " = " . encode_html($dump) . ";\n";
     }
 
