@@ -1,17 +1,28 @@
 NAME
-    Devel::StackTrace::AsHTML -
+    Devel::StackTrace::AsHTML - Displays stack trace in HTML
 
 SYNOPSIS
       use Devel::StackTrace::AsHTML;
 
+      my $trace = Devel::StackTrace->new;
+      my $html  = $trace->as_html;
+
 DESCRIPTION
-    Devel::StackTrace::AsHTML is
+    Devel::StackTrace::AsHTML adds "as_html" method to Devel::StackTrace
+    which displays the stack trace in a beautiful HTML, with code snippet
+    context and even lexical variables, if you call it on
+    Devel::StackTrace::WithLexicals.
 
 AUTHOR
     Tatsuhiko Miyagawa <miyagawa@bulknews.net>
+
+    HTML generation code is ripped off from CGI::ExceptionManager written by
+    Tokuhiro Matsuno and Kazuho Oku.
 
 LICENSE
     This library is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself.
 
 SEE ALSO
+    Devel::StackTrace Devel::StackTrace::WithLexicals CGI::ExceptionManager
+
