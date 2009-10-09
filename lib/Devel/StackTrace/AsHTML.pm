@@ -81,11 +81,15 @@ HEAD
         );
     }
     $out .= qq{</ol>};
+    $out .= "</body></html>";
+
     $out;
 }
 
 sub _build_lexicals {
     my($lexicals, $ref) = @_;
+
+    return '' unless keys %$lexicals;
 
     my $html;
     $html = qq(<p><a class="toggle" href="javascript:showLexicals('lexicals-$ref')">Show lexical variables</a></p><pre class="lexicals" id="lexicals-$ref">);
@@ -101,7 +105,6 @@ sub _build_lexicals {
     }
 
     $html .= qq(</pre>);
-    $html .= "</body></html>";
 
     return $html;
 }
