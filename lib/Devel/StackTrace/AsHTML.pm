@@ -42,10 +42,11 @@ pre .match { color: #000;background-color: #f99; font-weight: bold }
 pre.vardump { margin:0 }
 pre code strong { color: #000; background: #f88; }
 
-table.lexicals { border-collapse: collapse }
-table.lexicals td { border: 1px solid #000; margin: 0; padding: .3em }
+table.lexicals, table.arguments { border-collapse: collapse }
+table.lexicals td, table.arguments td { border: 1px solid #000; margin: 0; padding: .3em }
 table.lexicals tr:nth-child(2n) { background: #DDDDFF }
-.lexicals { display: none }
+table.arguments tr:nth-child(2n) { background: #DDFFDD }
+.lexicals, .arguments { display: none }
 .variable, .value { font-family: monospace; white-space: pre }
 td.variable { vertical-align: top }
 STYLE
@@ -58,12 +59,20 @@ STYLE
 
     $out .= <<HEAD;
 <script language="JavaScript" type="text/javascript">
-function toggleLexicals(ref) {
- var css = document.getElementById('lexicals-'+ref).style;
+function toggleThing(ref, type, hideMsg, showMsg) {
+ var css = document.getElementById(type+'-'+ref).style;
  css.display = css.display == 'block' ? 'none' : 'block';
 
  var hyperlink = document.getElementById('toggle-'+ref);
- hyperlink.textContent = css.display == 'block' ? 'Hide lexical variables' : 'Show lexical variables';
+ hyperlink.textContent = css.display == 'block' ? hideMsg : showMsg;
+}
+
+function toggleArguments(ref) {
+ toggleThing(ref, 'arguments', 'Hide function arguments', 'Show function arguments');
+}
+
+function toggleLexicals(ref) {
+ toggleThing(ref, 'lexicals', 'Hide lexical variables', 'Show lexical variables');
 }
 </script>
 </head>
@@ -86,6 +95,7 @@ HEAD
             q(<pre class="context"><code>),
             _build_context($frame) || '',
             q(</code></pre>),
+            _build_arguments($i, [$frame->args]),
             $frame->can('lexicals') ? _build_lexicals($i, $frame->lexicals) : '',
             q(</li>),
         );
@@ -100,25 +110,49 @@ HEAD
     $out;
 }
 
+my $dumper = sub {
+    my $value = shift;
+    $value = $$value if ref $value eq 'SCALAR' or ref $value eq 'REF';
+    my $d = Data::Dumper->new([ $value ]);
+    $d->Indent(1)->Terse(1)->Deparse(1);
+    chomp(my $dump = $d->Dump);
+    $dump;
+};
+
+sub _build_arguments {
+    my($id, $args) = @_;
+    my $ref = "arg-$id";
+
+    return '' unless @$args;
+
+    my $html = qq(<p><a class="toggle" id="toggle-$ref" href="javascript:toggleArguments('$ref')">Show function arguments</a></p><table class="arguments" id="arguments-$ref">);
+
+    # Don't use while each since Dumper confuses that
+    for my $idx (0 .. @$args - 1) {
+        my $value = $args->[$idx];
+        my $dump = $dumper->($value);
+        $html .= qq{<tr>};
+        $html .= qq{<td class="variable">\$_[$idx]</td>};
+        $html .= qq{<td class="value">} . encode_html($dump) . qq{</td>};
+        $html .= qq{</tr>};
+    }
+    $html .= qq(</table>);
+
+    return $html;
+}
+
 sub _build_lexicals {
     my($id, $lexicals) = @_;
     my $ref = "lex-$id";
 
+    warn $ref;
     return '' unless keys %$lexicals;
 
     my $html = qq(<p><a class="toggle" id="toggle-$ref" href="javascript:toggleLexicals('$ref')">Show lexical variables</a></p><table class="lexicals" id="lexicals-$ref">);
 
-    my $dumper = sub {
-        my $d = Data::Dumper->new([ @_ ]);
-        $d->Indent(1)->Terse(1)->Deparse(1);
-        chomp(my $dump = $d->Dump);
-        $dump;
-    };
-
     # Don't use while each since Dumper confuses that
     for my $var (sort keys %$lexicals) {
         my $value = $lexicals->{$var};
-        $value = $$value if ref $value eq 'SCALAR' or ref $value eq 'REF';
         my $dump = $dumper->($value);
         $dump =~ s/^\{(.*)\}$/($1)/s if $var =~ /^\%/;
         $dump =~ s/^\[(.*)\]$/($1)/s if $var =~ /^\@/;
