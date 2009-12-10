@@ -216,10 +216,11 @@ Devel::StackTrace::AsHTML - Displays stack trace in HTML
 
 =head1 DESCRIPTION
 
-Devel::StackTrace::AsHTML adds C<as_html> method to
-L<Devel::StackTrace> which displays the stack trace in a beautiful
-HTML, with code snippet context and even lexical variables, if you
-call it on L<Devel::StackTrace::WithLexicals>.
+Devel::StackTrace::AsHTML adds C<as_html> method to L<Devel::StackTrace> which
+displays the stack trace in beautiful HTML, with code snippet context and
+function parameters. If you call it on an instance of
+L<Devel::StackTrace::WithLexicals>, you even get to see the lexical variables
+of each stack frame.
 
 =head1 AUTHOR
 
