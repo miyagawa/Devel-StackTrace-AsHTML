@@ -34,7 +34,7 @@ sub render {
 a.toggle { color: #444 }
 body { margin: 0; padding: 0; background: #fff; color: #000; }
 h1 { margin: 0 0 .5em; padding: .25em .5em .1em 1.5em; border-bottom: thick solid #002; background: #444; color: #eee; font-size: x-large; }
-p.head { margin: .5em 1em; }
+p.message { margin: .5em 1em; }
 li.frame { font-size: small; margin-top: 3em }
 li.frame:nth-child(1) { margin-top: 0 }
 pre.context { border: 1px solid #aaa; padding: 0.2em 0; background: #fff; color: #444; font-size: medium; }
@@ -68,7 +68,7 @@ function toggleLexicals(ref) {
 </script>
 </head>
 <body>
-<h1>Error trace</h1><p class="head">$msg</p><ol>
+<h1>Error trace</h1><p class="message">$msg</p><ol>
 HEAD
 
     $trace->next_frame; # ignore the head
@@ -91,6 +91,10 @@ HEAD
         );
     }
     $out .= qq{</ol>};
+
+    $out .= qq{<p class="message">Install <a target="_blank" href="http://search.cpan.org/perldoc?Devel::StackTrace::WithLexicals">Devel::StackTrace::WithLexicals</a> to see the lexical variables of each frame.</p>}
+        unless $trace->frame(0)->can('lexicals');
+
     $out .= "</body></html>";
 
     $out;
