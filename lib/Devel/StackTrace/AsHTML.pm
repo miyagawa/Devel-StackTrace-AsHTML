@@ -40,7 +40,12 @@ pre.context { border: 1px solid #aaa; padding: 0.2em 0; background: #fff; color:
 pre .match { color: #000;background-color: #f99; font-weight: bold }
 pre.vardump { margin:0 }
 pre code strong { color: #000; background: #f88; }
+
+table.lexicals { border-collapse: collapse }
+table.lexicals td { border: 1px solid #000; margin: 0; padding: .3em }
 .lexicals { display: none }
+.variable, .value { font-family: monospace; white-space: pre }
+td.variable { vertical-align: top }
 STYLE
 
     if (ref $opt{style}) {
@@ -91,7 +96,7 @@ sub _build_lexicals {
 
     return '' unless keys %$lexicals;
 
-    my $html = qq(<p><a class="toggle" href="javascript:showLexicals('lexicals-$ref')">Show lexical variables</a></p><pre class="lexicals" id="lexicals-$ref">);
+    my $html = qq(<p><a class="toggle" href="javascript:showLexicals('lexicals-$ref')">Show lexical variables</a></p><table class="lexicals" id="lexicals-$ref">);
 
     my $dumper = sub {
         my $d = Data::Dumper->new([ @_ ]);
@@ -107,10 +112,12 @@ sub _build_lexicals {
         my $dump = $dumper->($value);
         $dump =~ s/^\{(.*)\}$/($1)/s if $var =~ /^\%/;
         $dump =~ s/^\[(.*)\]$/($1)/s if $var =~ /^\@/;
-        $html .= "my " . encode_html($var)  . " = " . encode_html($dump) . ";\n";
+        $html .= qq{<tr>};
+        $html .= qq{<td class="variable">} . encode_html($var)  . qq{</td>};
+        $html .= qq{<td class="value">}    . encode_html($dump) . qq{</td>};
+        $html .= qq{</tr>};
     }
-
-    $html .= qq(</pre>);
+    $html .= qq(</table>);
 
     return $html;
 }
