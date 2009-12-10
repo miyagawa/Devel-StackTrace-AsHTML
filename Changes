@@ -1,5 +1,8 @@
 Revision history for Perl extension Devel::StackTrace::AsHTML
 
+0.04  Thu Dec 10 12:12:50 PST 2009
+        - Improved lexical variables display (Sartak)
+
 0.03  Fri Oct  9 02:11:46 PDT 2009
         - use Data::Dumper and deparse for better code reference output (gfx)
 
