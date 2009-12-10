@@ -105,7 +105,7 @@ sub _build_lexicals {
 
     return '' unless keys %$lexicals;
 
-    my $html = qq(<p><a class="toggle" id="toggle-$ref" href="javascript:toggleLexicals($ref)">Show lexical variables</a></p><table class="lexicals" id="lexicals-$ref">);
+    my $html = qq(<p><a class="toggle" id="toggle-$ref" href="javascript:toggleLexicals('$ref')">Show lexical variables</a></p><table class="lexicals" id="lexicals-$ref">);
 
     my $dumper = sub {
         my $d = Data::Dumper->new([ @_ ]);
