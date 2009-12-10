@@ -35,7 +35,8 @@ a.toggle { color: #444 }
 body { margin: 0; padding: 0; background: #fff; color: #000; }
 h1 { margin: 0 0 .5em; padding: .25em .5em .1em 1.5em; border-bottom: thick solid #002; background: #444; color: #eee; font-size: x-large; }
 p.head { margin: .5em 1em; }
-li { font-size: small; }
+li.frame { font-size: small; margin-top: 3em }
+li.frame:nth-child(1) { margin-top: 0 }
 pre.context { border: 1px solid #aaa; padding: 0.2em 0; background: #fff; color: #444; font-size: medium; }
 pre .match { color: #000;background-color: #f99; font-weight: bold }
 pre.vardump { margin:0 }
@@ -76,7 +77,7 @@ HEAD
         $i++;
         $out .= join(
             '',
-            '<li>',
+            '<li class="frame">',
             $frame->subroutine ? encode_html("in " . $frame->subroutine) : '',
             ' at ',
             $frame->filename ? encode_html($frame->filename) : '',
