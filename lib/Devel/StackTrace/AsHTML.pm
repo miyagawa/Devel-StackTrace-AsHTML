@@ -56,9 +56,12 @@ STYLE
 
     $out .= <<HEAD;
 <script language="JavaScript" type="text/javascript">
-function showLexicals(id) {
- var css = document.getElementById(id).style;
- css.display = css.display == 'block' ? 'none' : 'block'
+function toggleLexicals(ref) {
+ var css = document.getElementById('lexicals-'+ref).style;
+ css.display = css.display == 'block' ? 'none' : 'block';
+
+ var hyperlink = document.getElementById('toggle-'+ref);
+ hyperlink.textContent = css.display == 'block' ? 'Hide lexical variables' : 'Show lexical variables';
 }
 </script>
 </head>
@@ -96,7 +99,7 @@ sub _build_lexicals {
 
     return '' unless keys %$lexicals;
 
-    my $html = qq(<p><a class="toggle" href="javascript:showLexicals('lexicals-$ref')">Show lexical variables</a></p><table class="lexicals" id="lexicals-$ref">);
+    my $html = qq(<p><a class="toggle" id="toggle-$ref" href="javascript:toggleLexicals($ref)">Show lexical variables</a></p><table class="lexicals" id="lexicals-$ref">);
 
     my $dumper = sub {
         my $d = Data::Dumper->new([ @_ ]);
