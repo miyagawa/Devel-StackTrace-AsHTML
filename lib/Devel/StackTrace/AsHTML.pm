@@ -101,7 +101,8 @@ HEAD
 }
 
 sub _build_lexicals {
-    my($lexicals, $ref) = @_;
+    my($lexicals, $id) = @_;
+    my $ref = "lex-$id";
 
     return '' unless keys %$lexicals;
 
