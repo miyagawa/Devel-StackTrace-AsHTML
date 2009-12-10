@@ -86,7 +86,7 @@ HEAD
             q(<pre class="context"><code>),
             _build_context($frame) || '',
             q(</code></pre>),
-            $frame->can('lexicals') ? _build_lexicals($frame->lexicals, $i) : '',
+            $frame->can('lexicals') ? _build_lexicals($i, $frame->lexicals) : '',
             q(</li>),
         );
     }
@@ -101,7 +101,7 @@ HEAD
 }
 
 sub _build_lexicals {
-    my($lexicals, $id) = @_;
+    my($id, $lexicals) = @_;
     my $ref = "lex-$id";
 
     return '' unless keys %$lexicals;
