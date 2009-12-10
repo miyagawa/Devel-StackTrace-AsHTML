@@ -43,6 +43,7 @@ pre code strong { color: #000; background: #f88; }
 
 table.lexicals { border-collapse: collapse }
 table.lexicals td { border: 1px solid #000; margin: 0; padding: .3em }
+table.lexicals tr:nth-child(2n) { background: #DDDDFF }
 .lexicals { display: none }
 .variable, .value { font-family: monospace; white-space: pre }
 td.variable { vertical-align: top }
