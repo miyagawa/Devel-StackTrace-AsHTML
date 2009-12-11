@@ -1,5 +1,8 @@
 Revision history for Perl extension Devel::StackTrace::AsHTML
 
+0.05  Thu Dec 10 17:53:48 PST 2009
+        - remove debug prints
+
 0.04  Thu Dec 10 12:12:50 PST 2009
         - Improved lexical variables display (Sartak)
 
