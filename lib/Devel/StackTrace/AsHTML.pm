@@ -34,7 +34,7 @@ sub render {
 a.toggle { color: #444 }
 body { margin: 0; padding: 0; background: #fff; color: #000; }
 h1 { margin: 0 0 .5em; padding: .25em .5em .1em 1.5em; border-bottom: thick solid #002; background: #444; color: #eee; font-size: x-large; }
-p.message { margin: .5em 1em; }
+pre.message { margin: .5em 1em; }
 li.frame { font-size: small; margin-top: 3em }
 li.frame:nth-child(1) { margin-top: 0 }
 pre.context { border: 1px solid #aaa; padding: 0.2em 0; background: #fff; color: #444; font-size: medium; }
@@ -77,7 +77,7 @@ function toggleLexicals(ref) {
 </script>
 </head>
 <body>
-<h1>Error trace</h1><p class="message">$msg</p><ol>
+<h1>Error trace</h1><pre class="message">$msg</pre><ol>
 HEAD
 
     $trace->next_frame; # ignore the head
