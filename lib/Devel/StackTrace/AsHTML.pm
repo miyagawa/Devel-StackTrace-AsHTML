@@ -8,6 +8,7 @@ use Data::Dumper;
 use Devel::StackTrace;
 use Scalar::Util;
 
+no warnings 'qw';
 my %enc = qw( & &amp; > &gt; < &lt; " &quot; ' &#39; );
 
 # NOTE: because we don't know which encoding $str is in, or even if
