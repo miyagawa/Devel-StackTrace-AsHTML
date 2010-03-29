@@ -8,14 +8,21 @@ use Data::Dumper;
 use Devel::StackTrace;
 use Scalar::Util;
 
+my %enc = qw( & &amp; > &gt; < &lt; " &quot; ' &#39; );
+
+# NOTE: because we don't know which encoding $str is in, or even if
+# $str is a wide character (decoded strings), we just leave the low
+# bits, including latin-1 range and encode everything higher as HTML
+# entities. I know this is NOT always correct, but should mostly work
+# in case $str is encoded in utf-8 bytes or wide chars. This is a
+# necessary workaround since we're rendering someone else's code which
+# we can't enforce string encodings.
+
 sub encode_html {
     my $str = shift;
-    $str =~ s/&/&amp;/g;
-    $str =~ s/>/&gt;/g;
-    $str =~ s/</&lt;/g;
-    $str =~ s/"/&quot;/g;
-    $str =~ s/'/&#39;/g;
-    return $str;
+    $str =~ s/([^\x00-\x21\x23-\x25\x28-\x3b\x3d\x3f-\xff])/$enc{$1} || '&#' . ord($1) . ';' /ge;
+    utf8::downgrade($str);
+    $str;
 }
 
 sub Devel::StackTrace::as_html {
