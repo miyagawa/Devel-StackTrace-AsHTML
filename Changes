@@ -1,5 +1,8 @@
 Revision history for Perl extension Devel::StackTrace::AsHTML
 
+0.08  Sun Mar 28 20:35:26 PDT 2010
+        - Encode high bit characters as HTML entities.
+
 0.07  Sat Mar 27 06:31:23 PDT 2010
         - Hide the WithLexical recommendation from HTML
 
