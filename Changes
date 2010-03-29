@@ -1,5 +1,8 @@
 Revision history for Perl extension Devel::StackTrace::AsHTML
 
+0.09  Sun Mar 28 23:04:05 PDT 2010
+        - no warnings about # in qw()
+
 0.08  Sun Mar 28 20:35:26 PDT 2010
         - Encode high bit characters as HTML entities.
 
