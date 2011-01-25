@@ -1,5 +1,8 @@
 Revision history for Perl extension Devel::StackTrace::AsHTML
 
+0.10  Mon Jan 24 16:29:08 PST 2011
+        - Don't ignore the top frame. This should be donw using the ignore_package option (Jonathan Schwartz)
+
 0.09  Sun Mar 28 23:04:05 PDT 2010
         - no warnings about # in qw()
 
