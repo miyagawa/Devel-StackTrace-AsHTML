@@ -35,7 +35,7 @@ sub render {
     my $trace = shift;
     my %opt   = @_;
 
-    my $msg = encode_html($trace->frame(1)->args);
+    my $msg = encode_html($trace->frame(0)->as_string(1));
     my $out = qq{<!doctype html><head><title>Error: ${msg}</title>};
 
     $opt{style} ||= \<<STYLE;
