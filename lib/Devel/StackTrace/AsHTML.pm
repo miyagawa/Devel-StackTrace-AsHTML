@@ -103,7 +103,7 @@ HEAD
             q(<pre class="context"><code>),
             _build_context($frame) || '',
             q(</code></pre>),
-            _build_arguments($i, [$frame->args]),
+            _build_arguments($i, $next_frame),
             $frame->can('lexicals') ? _build_lexicals($i, $frame->lexicals) : '',
             q(</li>),
         );
@@ -124,16 +124,18 @@ my $dumper = sub {
 };
 
 sub _build_arguments {
-    my($id, $args) = @_;
+    my($id, $frame) = @_;
     my $ref = "arg-$id";
 
-    return '' unless @$args;
+    return '' unless $frame && $frame->args;
+
+    my @args = $frame->args;
 
     my $html = qq(<p><a class="toggle" id="toggle-$ref" href="javascript:toggleArguments('$ref')">Show function arguments</a></p><table class="arguments" id="arguments-$ref">);
 
     # Don't use while each since Dumper confuses that
-    for my $idx (0 .. @$args - 1) {
-        my $value = $args->[$idx];
+    for my $idx (0 .. @args - 1) {
+        my $value = $args[$idx];
         my $dump = $dumper->($value);
         $html .= qq{<tr>};
         $html .= qq{<td class="variable">\$_[$idx]</td>};
