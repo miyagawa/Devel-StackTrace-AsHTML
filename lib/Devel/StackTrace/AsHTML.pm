@@ -91,10 +91,11 @@ HEAD
     my $i = 0;
     while (my $frame = $trace->next_frame) {
         $i++;
+        my $next_frame = $trace->frame($i); # peek next
         $out .= join(
             '',
             '<li class="frame">',
-            $frame->subroutine ? encode_html("in " . $frame->subroutine) : '',
+            ($next_frame && $next_frame->subroutine) ? encode_html("in " . $next_frame->subroutine) : '',
             ' at ',
             $frame->filename ? encode_html($frame->filename) : '',
             ' line ',

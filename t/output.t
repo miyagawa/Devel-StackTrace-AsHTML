@@ -13,5 +13,6 @@ sub bar { foo("bar") }
 bar(2);
 
 like $html, qr/match.*bar\(2\)/;
+like $html, qr!t/output\.t line 8.*\n.*in main::foo!;
 
 done_testing;
