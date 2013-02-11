@@ -1,5 +1,8 @@
 Revision history for Perl extension Devel::StackTrace::AsHTML
 
+0.13  Mon Feb 11 11:52:15 PST 2013
+        - Get subroutine arguments from the next frame too
+
 0.12  Mon Feb 11 11:25:50 PST 2013
         - Fixed the use of $frame->subroutine since it returns a subroutine that is *invoked* on that
           call frame, rather than what the frame is *in*. Fixed to peek the next frame to get the
