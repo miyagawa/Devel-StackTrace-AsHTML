@@ -2,7 +2,7 @@ package Devel::StackTrace::AsHTML;
 
 use strict;
 use 5.008_001;
-our $VERSION = '0.13';
+our $VERSION = '0.14';
 
 use Data::Dumper;
 use Devel::StackTrace;
