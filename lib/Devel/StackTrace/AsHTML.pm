@@ -235,6 +235,14 @@ Shawn M Moore
 
 HTML generation code is ripped off from L<CGI::ExceptionManager> written by Tokuhiro Matsuno and Kazuho Oku.
 
+=head1 COPYRIGHT
+
+The following copyright notice applies to all the files provided in
+this distribution, including binary files, unless explicitly noted
+otherwise.
+
+Copyright 2009-2013 Tatsuhiko Miyagawa
+
 =head1 LICENSE
 
 This library is free software; you can redistribute it and/or modify
