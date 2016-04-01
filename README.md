@@ -19,7 +19,7 @@ of each stack frame.
 
 # AUTHOR
 
-Tatsuhiko Miyagawa &lt;miyagawa@bulknews.net>
+Tatsuhiko Miyagawa <miyagawa@bulknews.net>
 
 Shawn M Moore
 

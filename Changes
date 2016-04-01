@@ -2,6 +2,9 @@ Revision history for Perl extension Devel::StackTrace::AsHTML
 
 {{$NEXT}}
 
+0.15  2016-04-01 12:23:25 PDT
+        - Switch to Milla (haarg)
+
 0.14  Mon Feb 18 11:40:53 PST 2013
         - Fix test for Win32 (RickFord)
 
